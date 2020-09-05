@@ -1,0 +1,45 @@
+<div>
+  <input 
+  
+  #query
+  (keyup)="filter(query.value)"
+  placeholder="Search"
+  class="form-control"
+  type="text">
+</div>
+
+
+
+
+
+<table class="table" dataTable >
+  <thead>
+  <tr></tr>
+  <th>Title</th>
+  
+  <th>Department</th>
+  <th>Course</th>
+  <th>Semester</th>
+  <th></th>
+  </thead>
+  <tbody>
+      <tr *ngFor="let p of filterpaper ">
+          <td>{{p.title}}</td>
+         
+        <td>{{p.Department}}</td>
+          <td>{{p.Course}}</td>
+          <td>{{p.Semestar}}</td>
+          <td>
+              <a [routerLink]="['/admin/power/', p.key]">Edit</a>
+          </td>
+          <td ><button (click)="delete(p.key)" class="btn btn-danger"> Delete</button>
+           
+          </td>
+      </tr>
+  </tbody>
+  
+  
+  
+  
+  
+  </table> 

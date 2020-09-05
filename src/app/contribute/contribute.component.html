@@ -1,0 +1,141 @@
+<div class="row" style="margin: 50px ;">
+    <div class="col-md-6">
+    <form class="btform"  #f="ngForm" (ngSubmit)="save(f.value)">
+            <div class="form-group">
+                <label for="title">Paper Title</label>
+                <input   #title="ngModel" required ngModel id="title "  name="title" type="text" class="form-control" >
+                <div class="alert alert-danger" *ngIf="title.touched && title.invalid">
+                    title is required
+                </div>
+            
+            </div>
+            <div class="form-group">
+                <label for="price">Year</label>
+             <input  id="Papercode "  #Papercode="ngModel"  name="Papercode" ngModel type="number"class="form-control"  required [min]="0" >
+            
+            
+           
+               
+                <div class="alert alert-danger" *ngIf="Papercode.touched && Papercode.invalid " >
+               <div *ngIf="Papercode.errors.required">paper code  is requred</div> 
+               <div *ngIf="Papercode.errors?.min">paper code  should be greater than 0</div>
+            
+            
+            </div>
+            
+            </div>
+            <div class="form-group">
+                <label for="Department">Departments</label>
+<select  id="Department" [(ngModel)]="selectedCountry" (change)="departmentchange($event.target.value)" name="Department" #Department="ngModel" ngModel  class="form-control" required >
+                    <option >select deparment</option>
+                         <option *ngFor ="let country of Countries |async" >{{country.name}}
+                         </option>
+                         <option>other</option>
+                         </select>
+                    <div class="alert alert-danger" *ngIf="Department.touched && Department.invalid   ">Please select again</div>
+<div  *ngIf="selectedCountrybool===true">Please enter the Department
+    <input type="text"  id="Department"  placeholder="please enter the Department"  name="Department" #Department="ngModel" ngModel  class="form-control" required >
+</div>
+                
+</div>
+
+
+
+
+
+            <div class="form-group">
+                <label for="Course">Course</label>
+                  <select  id="Course"   name="Course" (change)="changeState($event.target.value)" #Course="ngModel"ngModel  class="form-control" required >
+                    <option > select class</option>
+                    <option *ngFor="let state of states |async" >
+                        {{state.name}}
+                    </option>
+                    <option>other</option>
+                  </select>
+                    <div class="alert alert-danger" *ngIf="Course.touched && Course.invalid   ">Please select again</div>
+             <div  *ngIf="selectedCountrybool===true else second">Please enter the Course
+                 <input type="text" placeholder="please enter the Course"  id="Course"   name="Course" #Course="ngModel"ngModel  class="form-control" required>
+                    </div>
+                    <ng-template #second >Please enter the Course
+                        <div *ngIf="selectedCoursebool==true">
+                           
+                            <input type="text" placeholder="please enter the Course"  id="Course"   name="Course" #Course="ngModel"ngModel  class="form-control" required>
+                        </div>
+                        </ng-template>
+            </div>
+            <div class="form-group">
+                <label for="Semestar">Semestar</label>
+  <select  id="semestar"   name="Semestar"(change)="changeSem($event.target.value)" #Semestar="ngModel"ngModel  class="form-control" required >
+                    <option value="">select</option>
+                    <option  *ngFor="let city of cities |async"  >
+                   {{city.name}}
+                    </option>
+                    <option>other</option>
+                   </select>
+                    <div class="alert alert-danger" *ngIf="Semestar.touched && Semestar.invalid   ">Please select again</div>
+                    <div  *ngIf="selectedCountrybool===true && selectedCoursebool==true else third"> Please enter the Year
+   <input type="text" placeholder="please enter the year"  id="semestar"   name="Semestar"  #Semestar="ngModel"ngModel  class="form-control" required>
+                    </div>
+                    <ng-template #third >
+                        <div *ngIf="selectedsembool==true">Please enter the year
+                            <input type="text" placeholder="please enter the year"  id="semestar"   name="Semestar"  #Semestar="ngModel"ngModel  class="form-control" required>
+                        </div>
+                        </ng-template>
+            </div>
+
+
+            <div class="form-group">
+                <label for="file">Pdf</label>
+                <input  #file="ngModel" autocomplete="off" multiple="true" ngModel (change)="onSelectFile($event)" name="image" type="file" class="form-control-file"  required url>
+            </div>
+            
+             <div *ngIf="progressValue | async as val">
+    <progress type="warning"  [value]="val" style="height: 7mm; width: 50%" max="100" ></progress>
+    <br />
+      <span *ngIf="val<100" style="color:rgb(255, 60, 0); font-size: 17px; font-weight: 410;">{{ val | number}}% </span><span *ngIf="val == 100" style="color:rgb(1, 153, 34);  font-size: 17px; font-weight: 410;">Completed !</span>
+  </div>
+            <div class="alert alert-danger" *ngIf="file.touched && file.invalid">
+                 </div>
+            <button class="btn-primary" type="submit" [disabled]="!f.form.valid">Save</button>
+        </form>
+            
+    
+    
+    
+    </div>
+    <div class="col-md-6">
+    
+        <div class="card" style="width: 20rem;">
+            <img class="card-img-top img-thumbnail" [src]="downloadableURL" >
+            <div class="card-body">
+              <h5 class="card-title"> 
+              Paper Title   {{title.value}}
+              </h5>
+              <p class="card-text">
+              Department  {{Department.value}}
+               </p>
+              <p class="card-text">
+              Course {{Course.value }}
+              </p>
+              <p class="card-text">
+               Semestar {{Semestar.value }}
+             </p>
+            </div>
+          </div>
+    
+    </div>
+    
+  
+    
+    
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    

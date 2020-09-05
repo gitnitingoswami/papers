@@ -1,0 +1,140 @@
+<div class="row" style="margin: 50px ;">
+    <div class="col-md-6">
+     <form class="btform"  #f="ngForm" (ngSubmit)="save(f.value)">
+            <div class="form-group">
+                <label for="title">Paper Title</label>
+                <input   #title="ngModel" required [(ngModel)]="product.title" id="title "  name="title" type="text" class="form-control" >
+                <div class="alert alert-danger" *ngIf="title.touched && title.invalid">
+                    title is required
+                </div>
+            
+            </div>
+            <div class="form-group">
+                <label for="price">paper code</label>
+                    <input  id="Papercode "  #price="ngModel"  name="Papercode" [(ngModel)]="product.Papercode" type="number"class="form-control"  required [min]="0" >
+             <div class="alert alert-danger" *ngIf="price.touched && price.invalid " >
+               <div *ngIf="price.errors.required">paper code  is requred</div> 
+               <div *ngIf="price.errors?.min">paper code  should be greater than 0</div>
+             </div>
+             </div>
+            <div class="form-group">
+                <label for="Department">Departments</label>
+<select  id="Department" [(ngModel)]="product.Department" (change)="departmentchange($event.target.value)" name="Department" #Department="ngModel" ngModel  class="form-control" required >
+                    <option value=""></option>
+                    <option >select deparment</option>
+                         <option *ngFor ="let country of Countries |async" >{{country.name}}
+                         </option>
+                         <option>other</option>
+                         </select>
+                    <div class="alert alert-danger" *ngIf="Department.touched && Department.invalid   ">Please select again</div>
+<div  *ngIf="selectedCountrybool===true">Please enter the Department
+    <div class="form-group col-md-6">
+        <label for="department_name">Department Name</label>
+        <input name="department_name" [(ngModel)]="department_name" type="text" class="form-control" id="department_name" placeholder="Department Name">
+        <button type="" (click)="addDepartment($event.target.value)" class="btn btn-primary">Add</button>
+    
+    </div>
+    
+    
+</div>
+</div>
+            <div class="form-group">
+                <label for="Course">Course</label>
+                <select  id="Course"   name="Course" (change)="changeState($event.target.value)" #Course="ngModel" [(ngModel)]="product.Course"  class="form-control" required >
+                    <option > select class</option>
+                    <option *ngFor="let state of states |async" >
+                        {{state.name}}
+                    </option>
+                    <option>other</option>
+                  </select>
+                    <div class="alert alert-danger" *ngIf="Course.touched && Course.invalid   ">Please select again</div>
+                    <div  *ngIf="selectedCountrybool===true else second">Please enter the Course
+                        <input name="class_name" [(ngModel)]="class_name" type="text" class="form-control" id="class_name" placeholder="class Name">
+                        <button type="" (click)="addclass($event)" class="btn btn-primary">Add</button>
+                                      
+                      </div>
+                    <ng-template #second >Please enter the Course
+                        <div *ngIf="selectedCoursebool==true">
+                           
+                            <input name="class_name" [(ngModel)]="class_name" type="text" class="form-control" id="class_name" placeholder="class Name">
+                            <button type="" (click)="addclass($event)" class="btn btn-primary">Add</button>
+                                              
+                           </div>
+                        </ng-template>
+            </div>
+            <div class="form-group">
+                <label for="Semestar">Semestar</label>
+                <select  id="semestar"   name="Semestar"(change)="changeSem($event.target.value)" #Semestar="ngModel" [(ngModel)]="product.Semestar"  class="form-control" required >
+                    <option value="">select</option>
+                    <option  *ngFor="let city of cities |async"  >
+                   {{city.name}}
+                    </option>
+                    <option>other</option>
+                   </select>
+                    <div class="alert alert-danger" *ngIf="Semestar.touched && Semestar.invalid   ">Please select again</div>
+                    <div  *ngIf= "selectedCountrybool==true "> Please enter the Year
+                        <input name="sem_name" [(ngModel)]="sem_name" type="text" class="form-control" id="sem_name" placeholder="sem Name">
+<button type="" (click)="addsem($event)" class="btn btn-primary">Add</button>
+                  
+                    </div>
+                    <div  *ngIf= "selectedCoursebool==true else third"> Please enter the Year
+                        <input name="sem_name" [(ngModel)]="sem_name" type="text" class="form-control" id="sem_name" placeholder="sem Name">
+                        <button type="" (click)="addsem($event)" class="btn btn-primary">Add</button>
+                                          
+                    </div>
+                    <ng-template #third >
+                        <div *ngIf="selectedsembool==true">Please enter the year
+                            <input name="sem_name" [(ngModel)]="sem_name" type="text" class="form-control" id="sem_name" placeholder="sem Name">
+                            <button type="" (click)="addsem($event)" class="btn btn-primary">Add</button>
+                                            
+                           </div>
+                        </ng-template>
+            </div>
+            <div class="form-group">
+                <label for="file">Imageurl</label>
+                <input  #file="ngModel" autocomplete="off"  [(ngModel)]="product.image"  name="image" type="text" class="form-control-file"  required url>
+            </div>
+           <!--<div *ngIf="progressValue | async as val">
+    <progress type="warning"  [value]="val" style="height: 7mm; width: 50%" max="100" ></progress>
+    <br />
+      <span *ngIf="val<100" style="color:rgb(255, 60, 0); font-size: 17px; font-weight: 410;">{{ val | number}}% </span><span *ngIf="val == 100" style="color:rgb(1, 153, 34);  font-size: 17px; font-weight: 410;">Completed !</span>
+  </div>*/-->
+            <div class="alert alert-danger" *ngIf="file.touched && file.invalid">
+                
+            
+            </div>
+            <button class="btn-primary"  type="submit" [disabled]="!f.form.valid">Save</button>
+            <h3 *ngIf="abc==true" style="color: green; font-family: Arial, Helvetica, sans-serif;">sucess submit</h3>
+        <button *ngIf="id" class="btn-primary" (click)="delete()">delete</button>
+            </form>
+             </div>
+    <div class="col-md-6">
+ <div class="card" style="width: 20rem;" >
+            <img  class="card-img-top img-thumbnail" [src]="product.image" >
+            <div class="card-body">
+              <h5 class="card-title"> 
+              Paper Title   {{product.title}}
+              </h5>
+              <p class="card-text">
+              Department  {{product.Department}}
+               </p>
+              <p class="card-text">
+              Course {{product.Course }}
+              </p>
+              <p class="card-text">
+               Semestar {{product.Semestar}}
+             </p>
+            </div>
+          </div>
+    
+    </div>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,36 @@
+<div class="header navbar navbar-expand-lg navbar-dark bg-dark">
+  <img src="assets\newigulogoyellow5.png"  class="img-fluid" >
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="">PAPERS</a>
+ <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item ">
+          <a class="nav-link" routerLink="/">Home </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="contribute">Contribute</a>
+        </li>
+      
+        <ng-template #anomosUser>
+          <li  class="nav-item">
+              <a class="nav-link" routerLink="Login">Login</a>
+          </li>
+          </ng-template>
+          
+          <li  ngbDropdown *ngIf="appUser; else anomosUser" class="nav-item dropdown ">
+              <a ngbDropdownToggle class="nav-link dropdown-toggle"  id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{appUser.name  }}
+              </a>
+              <div ngbDropdownMenu class="dropdown-menu " aria-labelledby="dropdownId">
+                 <a *ngIf="appUser.isAdmin" class="dropdown-item" routerLink="admin">Admin</a>
+                  <a *ngIf="appUser.isAdmin" class="dropdown-item" routerLink="admin/power">Admindc</a>
+                  <a class="dropdown-item"  (click)="logout()">Log out</a>
+              </div>
+          </li>
+       </ul>
+      </div>
+  </nav>  
